@@ -1,0 +1,81 @@
+{
+  "name": "packet-inspector",
+  "productName": "Packet Inspector",
+  "version": "1.0.4",
+  "description": "Wireshark-inspired, beginner-friendly network traffic inspector with live visualization, plain-English packet explanations, conversation tracing and suspicious-activity detection.",
+  "main": "dist/main/main.js",
+  "author": "Packet Inspector",
+  "license": "MIT",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "start": "npm run build && node scripts/run-electron.mjs .",
+    "dev": "node scripts/build.mjs --watch",
+    "test": "node scripts/build.mjs --tests && node --test dist-test/*.test.cjs",
+    "dist": "npm run build && electron-builder",
+    "dist:win": "npm run build && electron-builder --win && node scripts/publish-root.mjs",
+    "dist:linux": "npm run build && electron-builder --linux",
+    "icons": "node scripts/run-electron.mjs scripts/make-icons.cjs"
+  },
+  "build": {
+    "appId": "dev.packetinspector.app",
+    "productName": "Packet Inspector",
+    "files": [
+      "dist/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "build/icon.ico"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Network",
+      "icon": "build/icons",
+      "synopsis": "See what your network is doing, explained in plain language"
+    },
+    "deb": {
+      "depends": [
+        "tcpdump"
+      ],
+      "recommends": [
+        "wireshark-common"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Packet Inspector",
+      "installerIcon": "build/install.ico",
+      "uninstallerIcon": "build/uninstall.ico",
+      "deleteAppDataOnUninstall": true,
+      "uninstallDisplayName": "Packet Inspector ${version}"
+    },
+    "portable": {
+      "artifactName": "PacketInspector-${version}-portable.exe"
+    },
+    "asarUnpack": [
+      "dist/helper/**"
+    ],
+    "copyright": "Copyright © 2026 Packet Inspector"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "electron": "^33.4.11",
+    "electron-builder": "^25.1.8",
+    "esbuild": "^0.24.2",
+    "typescript": "5.6"
+  }
+}

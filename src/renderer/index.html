@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Packet Inspector</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="icon.png" />
+</head>
+<body>
+  <header class="toolbar">
+    <div class="brand" aria-label="Packet Inspector">
+      <img src="icon.png" width="22" height="22" alt="" />
+      <span>Packet Inspector</span>
+    </div>
+    <div class="group">
+      <label class="sr-only" for="iface">Network interface</label>
+      <select id="iface" title="Network interface to capture on"></select>
+      <button id="btn-refresh" class="icon-btn" title="Refresh interfaces"></button>
+      <label class="sr-only" for="capfilter">Capture filter</label>
+      <input id="capfilter" class="expert-only" type="text" placeholder="Capture filter (optional, e.g. not port 22)" title="BPF capture filter, applied by the capture driver before packets reach the app" spellcheck="false" />
+      <button id="btn-start" class="primary"></button>
+      <button id="btn-stop"></button>
+    </div>
+    <div class="group">
+      <button id="btn-open" title="Import a .pcap / .pcapng / .pcap.gz file from tcpdump, Wireshark or a MikroTik router (you can also drag a file onto the window)"></button>
+      <button id="btn-demo" title="Explore the app with simulated traffic - no privileges required"></button>
+    </div>
+    <div class="group right">
+      <div class="seg mode-switch" role="group" aria-label="Interface mode" title="Simple hides packet-level detail and uses everyday wording. Expert shows everything.">
+        <button data-mode="simple">Simple</button>
+        <button data-mode="expert">Expert</button>
+      </div>
+      <button id="btn-save" class="expert-only" title="Save all packets as .pcapng (opens in Wireshark too)"></button>
+      <div class="menu-wrap expert-only">
+        <button id="btn-export" aria-haspopup="true"></button>
+        <div class="menu" id="export-menu" hidden>
+          <button data-csv="packets">Packets (CSV)</button>
+          <button data-csv="flows">Connections (CSV)</button>
+          <button data-csv="alerts">Alerts (CSV)</button>
+        </div>
+      </div>
+      <button id="btn-clear" class="icon-btn" title="Clear everything"></button>
+      <button id="btn-theme" class="icon-btn" title="Toggle light / dark"></button>
+    </div>
+  </header>
+
+  <div id="banner" class="banner" hidden></div>
+
+  <div class="layout">
+    <nav class="sidenav" aria-label="Views">
+      <button data-view="dashboard" class="active"><span class="ic" data-icon="dashboard"></span><span>Overview</span></button>
+      <button data-view="packets" class="expert-only"><span class="ic" data-icon="packets"></span><span>Packets</span></button>
+      <button data-view="flows"><span class="ic" data-icon="flows"></span><span id="nav-flows">Connections</span></button>
+      <button data-view="alerts"><span class="ic" data-icon="alerts"></span><span>Alerts</span><span class="badge" id="alert-badge" hidden></span></button>
+      <button data-view="health"><span class="ic" data-icon="health"></span><span>Troubleshoot</span></button>
+      <button data-view="databases" class="expert-only"><span class="ic" data-icon="database"></span><span>Databases</span></button>
+      <button data-view="watch" class="expert-only"><span class="ic" data-icon="eye"></span><span>Watchlist</span></button>
+    </nav>
+    <main id="views">
+      <section id="view-dashboard" class="view active"></section>
+      <section id="view-packets" class="view"></section>
+      <section id="view-flows" class="view"></section>
+      <section id="view-alerts" class="view"></section>
+      <section id="view-health" class="view"></section>
+      <section id="view-databases" class="view"></section>
+      <section id="view-watch" class="view"></section>
+    </main>
+  </div>
+
+  <footer class="statusbar">
+    <span id="st-state" class="st-state"></span>
+    <span id="st-source"></span>
+    <span class="spacer"></span>
+    <span id="st-packets"></span>
+    <span id="st-bytes"></span>
+    <span id="st-duration"></span>
+    <span id="st-version" class="muted"></span>
+  </footer>
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>

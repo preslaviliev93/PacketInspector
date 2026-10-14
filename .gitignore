@@ -1,0 +1,103 @@
+# ------------------------------------------------------------------
+# Dependencies
+# ------------------------------------------------------------------
+node_modules/
+.npm/
+.pnpm-store/
+.yarn/
+*.tgz
+
+# ------------------------------------------------------------------
+# Build output (all reproducible with npm run build / dist:win / dist:linux)
+# ------------------------------------------------------------------
+dist/
+dist-test/
+release/
+out/
+scratch_tmp/
+*.tsbuildinfo
+
+# Installers, launchers and packages produced by the build
+# (Install/Uninstall/Packet Inspector.exe in the project root, the capture
+# helper, AppImage/deb/rpm). Never commit binaries to the repository.
+*.exe
+*.msi
+*.dll
+*.blockmap
+*.AppImage
+*.deb
+*.rpm
+*.snap
+*.dmg
+*.zip
+*.7z
+builder-debug.yml
+builder-effective-config.yaml
+
+# ------------------------------------------------------------------
+# Network captures and exports: they can contain passwords, cookies and
+# private traffic. Keep them out of git, always.
+# ------------------------------------------------------------------
+*.pcap
+*.pcap.gz
+*.pcapng
+*.pcapng.gz
+*.cap
+*.cap.gz
+*.dmp
+*.etl
+*.erf
+*.snoop
+# CSV exports from the app (packets, connections, alerts)
+*.csv
+# Saved Watchlist rules, if ever copied out of the user profile
+watchlist.json
+
+# ------------------------------------------------------------------
+# Secrets and local configuration
+# ------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+.npmrc
+*.pem
+*.key
+*.pfx
+*.p12
+*.cer
+*.crt
+*.spc
+*.mobileprovision
+
+# ------------------------------------------------------------------
+# Tools, logs and test output
+# ------------------------------------------------------------------
+# Claude Code local settings and session data
+.claude/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+coverage/
+.nyc_output/
+.eslintcache
+.cache/
+tmp/
+temp/
+
+# ------------------------------------------------------------------
+# Editors and operating systems
+# ------------------------------------------------------------------
+.vscode/
+.vs/
+.idea/
+*.code-workspace
+*.swp
+*.swo
+*~
+.DS_Store
+._*
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/

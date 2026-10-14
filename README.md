@@ -38,7 +38,7 @@ Packet Inspector reads the same traffic and does the first round of thinking for
 You need [Node.js](https://nodejs.org) 20 or newer.
 
 ```bash
-git clone <your-repo-url> packet-inspector
+git clone https://github.com/preslaviliev93/PacketInspector packet-inspector
 cd packet-inspector
 npm install
 npm start
